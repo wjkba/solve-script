@@ -1,4 +1,4 @@
-export default function Exercise() {
+export default function ExerciseCard() {
   return (
     <div className="bg-[#323234] px-4 py-4 rounded">
       <div className="mb-2 flex items-center gap-2">
