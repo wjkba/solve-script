@@ -4,7 +4,11 @@ import { BiMenu, BiX } from "react-icons/bi";
 import { VscAccount } from "react-icons/vsc";
 import NavLink from "./NavLink";
 
-export default function Header() {
+interface HeaderProps {
+  className: string;
+}
+
+export default function Header({ className }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [{ text: "Exercises", href: "/exercises" }];
@@ -14,7 +18,9 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 mx-auto flex min-h-16 w-full max-w-[1440px] flex-wrap items-center justify-between gap-6 border-b border-[#3C3C3C] text-white bg-[#252526] px-4 py-4 text-base lg:min-h-20 lg:px-20 lg:py-0">
+    <header
+      className={`${className} sticky top-0 z-50 mx-auto flex min-h-16 w-full max-w-[1440px] flex-wrap items-center justify-between gap-6 border-b border-[#3C3C3C] text-white bg-[#252526] px-4 py-4 text-base lg:min-h-20 lg:py-0`}
+    >
       <div className="flex items-center gap-4">
         <NavLink className="cursor-pointer font-bold" href="/">
           {/* <img
