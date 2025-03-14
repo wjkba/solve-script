@@ -15,7 +15,7 @@ export default function NavLink({ href, children, className }: NavLinkProps) {
     <Link
       href={href}
       className={`${className || ""} ${
-        path.startsWith(href) ? "font-bold" : ""
+        path.startsWith(href) ? "font-medium  " : ""
       }`}
     >
       {children}

@@ -2,9 +2,9 @@ import React from "react";
 
 export default function ExerciseInfo() {
   return (
-    <div className="flex flex-col gap-4 p-6 bg-[#323234] rounded">
+    <div className="flex flex-col gap-4">
       <div>
-        <h1 className="text-2xl text-white mb-4">Exercise Title</h1>
+        <h1 className="mb-4 text-2xl text-white">Exercise Title</h1>
         <p>
           Given an array of numbers, return the sum of all positive numbers in
           the array. If there are no positive numbers, return 0.
