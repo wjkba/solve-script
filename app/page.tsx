@@ -4,9 +4,9 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex items-center">
+    <div className="flex min-h-[40dvh] items-center">
       <section id="hero">
-        <div className="mb-4 flex max-w-[24rem] flex-col gap-2 lg:mb-8 lg:max-w-[600px] lg:gap-4">
+        <div className="mb-4 flex max-w-[384px] flex-col gap-2 lg:mb-8 lg:max-w-[37.5rem] lg:gap-4">
           <p className="text-4xl text-white lg:text-6xl">
             Learn by Solving Coding Problems
           </p>
@@ -15,12 +15,12 @@ export default function Home() {
             code and track your progress as you improve.
           </p>
         </div>
-        <div className="flex max-w-[20rem] gap-2">
+        <div className="flex max-w-[340px] gap-2">
           <ButtonPrimary className="w-full">
             <Link href={"/register"}>Sign Up</Link>
           </ButtonPrimary>
           <ButtonSecondary className="w-full">
-            <Link href={"/exercises"}>View Exercises</Link>
+            <Link href={"/challenges"}>View Challenges</Link>
           </ButtonSecondary>
         </div>
       </section>

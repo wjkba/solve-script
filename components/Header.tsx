@@ -10,7 +10,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  const navLinks = [{ text: "Exercises", href: "/exercises" }];
+  const navLinks = [{ text: "Challenges", href: "/challenges" }];
 
   function toggleMenu() {
     setIsOpen(!isOpen);

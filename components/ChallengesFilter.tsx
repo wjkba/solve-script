@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import InputBox from "./InputBox";
 const TOPICS = ["Algorithms", "Arrays", "Math", "Loops", "Recursion"];
 
-export default function ExercisesFilter() {
+export default function ChallengesFilter() {
   const [isFilterShown, setIsFilterShown] = useState(false);
   const [isDekstop, setIsDekstop] = useState(false);
 

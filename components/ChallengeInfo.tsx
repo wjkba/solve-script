@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function ExerciseInfo() {
+export default function ChallengeInfo() {
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <h1 className="mb-4 text-2xl text-white">Exercise Title</h1>
+        <h1 className="mb-4 text-2xl text-white">Challenge Title</h1>
         <p>
           Given an array of numbers, return the sum of all positive numbers in
           the array. If there are no positive numbers, return 0.
