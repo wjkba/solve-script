@@ -2,9 +2,8 @@
 import ButtonPrimary from "@/components/ButtonPrimary";
 import ChallengeInfo from "@/components/ChallengeInfo";
 import Editor from "@monaco-editor/react";
+import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-
-interface TestResult {}
 
 const defaultValue = `// Write a function that adds two numbers
 function add(a, b) {
@@ -25,8 +24,15 @@ const challenge = {
 };
 
 export default function EditorPage() {
+  const params = useParams();
   const [isDesktop, setIsDesktop] = useState(false);
+  const [defaultValue, setDefaultValue] = useState("");
   const codeRef = useRef<string>(null);
+
+  useEffect(() => {
+    const savedCode = localStorage.getItem(`userCode-${params.slug}`);
+    if (savedCode) setDefaultValue(savedCode);
+  }, []);
 
   useEffect(() => {
     function checkIfDesktop() {
@@ -44,6 +50,7 @@ export default function EditorPage() {
   function handleEditorChange(value: string | undefined, event: any) {
     if (value) {
       codeRef.current = value;
+      localStorage.setItem(`userCode-${params.slug}`, value);
     }
   }
 
@@ -102,9 +109,7 @@ export default function EditorPage() {
           Run Code
         </button>
       </div>
-      <div className="rounded bg-[#252526] p-6">
-        <ChallengeInfo />
-      </div>
+      <div className="rounded bg-[#252526] p-6">{/* <ChallengeInfo /> */}</div>
     </div>
   );
 }

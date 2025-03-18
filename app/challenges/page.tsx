@@ -1,7 +1,12 @@
 import ChallengeCard from "@/components/ChallengeCard";
 import ChallengesFilter from "@/components/ChallengesFilter";
+import { getAllChallenges } from "../database/db";
+import { type Challenge } from "@/types/types";
 
 export default function ChallengesPage() {
+  const challenges: Challenge[] = getAllChallenges();
+  console.log(challenges);
+
   return (
     <div className="lg:flex lg:gap-16">
       <div className="lg:order-2">
@@ -14,7 +19,15 @@ export default function ChallengesPage() {
           type="search"
           placeholder="Search"
         />
-        <ChallengeCard />
+        {challenges.map((challenge: Challenge) => (
+          <ChallengeCard
+            slug={challenge.slug}
+            key={challenge.id}
+            title={challenge.title}
+            description={challenge.description}
+            difficulty={challenge.difficulty}
+          />
+        ))}
       </div>
     </div>
   );
