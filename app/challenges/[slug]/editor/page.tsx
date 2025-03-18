@@ -1,33 +1,37 @@
 "use client";
-import ButtonPrimary from "@/components/ButtonPrimary";
 import ChallengeInfo from "@/components/ChallengeInfo";
+import { Challenge } from "@/types/types";
 import Editor from "@monaco-editor/react";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-const defaultValue = `// Write a function that adds two numbers
-function add(a, b) {
-  return a + b;
-}
-
-`;
-
-const challenge = {
-  functionName: "add",
-  title: "a+b",
-  description: "a+b",
-  tests: [
-    { input: "2, 2", expected: 4 },
-    { input: "1, 10", expected: 11 },
-    { input: "5, -10", expected: -5 },
-  ],
-};
-
 export default function EditorPage() {
   const params = useParams();
+  const slug = params.slug as string;
+
   const [isDesktop, setIsDesktop] = useState(false);
   const [defaultValue, setDefaultValue] = useState("");
+  const [challenge, setChallenge] = useState<Challenge | null>(null);
   const codeRef = useRef<string>(null);
+
+  useEffect(() => {
+    async function fetchChallenge() {
+      if (!slug) return;
+      try {
+        const response = await fetch(`/api/challenges/${slug}`);
+        if (!response.ok) {
+          throw new Error("failed to fetch");
+        }
+
+        const data = await response.json();
+        setChallenge(data);
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchChallenge();
+  }, [slug]);
 
   useEffect(() => {
     const savedCode = localStorage.getItem(`userCode-${params.slug}`);
@@ -55,12 +59,12 @@ export default function EditorPage() {
   }
 
   function handleRunCode() {
-    if (codeRef.current) {
+    if (codeRef.current && challenge) {
       const userCode = codeRef.current;
       const testResults = challenge.tests.map((test) => {
         try {
           const userFunction = new Function(
-            userCode + `return ${challenge.functionName}(${test.input})`,
+            userCode + `return ${challenge.function_name}(${test.input})`,
           );
           const output = userFunction();
           const passed = output === test.expected;
@@ -83,11 +87,15 @@ export default function EditorPage() {
     }
   }
 
+  if (!challenge) {
+    return <></>;
+  }
+
   return (
     <div className="lg:grid lg:min-h-[90dvh] lg:grid-cols-3 lg:gap-8 lg:py-6">
       <div className="relative rounded bg-[#323234] p-3 lg:col-span-2">
         <Editor
-          defaultValue={defaultValue}
+          defaultValue={challenge.starter_code}
           height="100%"
           defaultLanguage="javascript"
           theme="vs-dark"

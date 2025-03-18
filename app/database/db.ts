@@ -8,6 +8,7 @@ export function getAllChallenges() {
 }
 
 export function getChallengeBySlug(slug: string) {
+  if (!slug) return null;
   return db
     .prepare("SELECT * FROM challenges WHERE slug = ?")
     .get(slug) as Challenge;
