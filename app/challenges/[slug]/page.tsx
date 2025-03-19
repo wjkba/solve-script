@@ -13,7 +13,7 @@ export default async function ChallengePage({
   params: { slug: string };
 }) {
   const { slug } = await params;
-  const challenge: Challenge = getChallengeBySlug(slug);
+  const challenge = getChallengeBySlug(slug);
   if (!challenge) {
     notFound();
   }
@@ -23,7 +23,7 @@ export default async function ChallengePage({
       <div className="mb-4 flex justify-between">
         <BackButton />
         <ButtonPrimary>
-          <Link href={"/challenges/1/editor"}>Continue in Editor</Link>
+          <Link href={`/challenges/${slug}/editor`}>Continue in Editor</Link>
         </ButtonPrimary>
       </div>
       <div className="rounded bg-[#323234] p-6">

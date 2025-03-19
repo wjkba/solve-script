@@ -12,8 +12,11 @@ export type Challenge = {
   function_name: string;
   solution_code: string;
   tests: { input: string; expected: string }[];
-  results: {
-    output_type: string;
-    expected_behavior: string;
-  };
+};
+
+export type TestResult = {
+  input: string;
+  output?: any;
+  expected?: any;
+  passed: boolean;
 };

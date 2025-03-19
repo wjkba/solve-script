@@ -1,8 +1,9 @@
 "use client";
 import ChallengeInfo from "@/components/ChallengeInfo";
-import { Challenge } from "@/types/types";
+import EditorInfoPanel from "@/components/EditorInfoPanel";
+import { Challenge, TestResult } from "@/types/types";
 import Editor from "@monaco-editor/react";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function EditorPage() {
@@ -10,8 +11,11 @@ export default function EditorPage() {
   const slug = params.slug as string;
 
   const [isDesktop, setIsDesktop] = useState(false);
-  const [defaultValue, setDefaultValue] = useState("");
+  const [defaultEditorValue, setDefaultEditorValue] = useState("");
   const [challenge, setChallenge] = useState<Challenge | null>(null);
+  const [results, setResults] = useState<TestResult[] | null>(null);
+  const [activeTab, setActiveTab] = useState("info");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const codeRef = useRef<string>(null);
 
   useEffect(() => {
@@ -20,10 +24,11 @@ export default function EditorPage() {
       try {
         const response = await fetch(`/api/challenges/${slug}`);
         if (!response.ok) {
-          throw new Error("failed to fetch");
+          notFound();
         }
 
         const data = await response.json();
+        data.tests = JSON.parse(data.tests);
         setChallenge(data);
         console.log(data);
       } catch (error) {
@@ -34,9 +39,15 @@ export default function EditorPage() {
   }, [slug]);
 
   useEffect(() => {
-    const savedCode = localStorage.getItem(`userCode-${params.slug}`);
-    if (savedCode) setDefaultValue(savedCode);
-  }, []);
+    if (challenge) {
+      const savedCode = localStorage.getItem(`userCode-${params.slug}`);
+      let defaultValue = savedCode ? savedCode : challenge.starter_code;
+      if (savedCode && savedCode.length < 10)
+        defaultValue = challenge.starter_code;
+      codeRef.current = defaultValue;
+      setDefaultEditorValue(defaultValue);
+    }
+  }, [challenge]);
 
   useEffect(() => {
     function checkIfDesktop() {
@@ -59,6 +70,7 @@ export default function EditorPage() {
   }
 
   function handleRunCode() {
+    let errors = 0;
     if (codeRef.current && challenge) {
       const userCode = codeRef.current;
       const testResults = challenge.tests.map((test) => {
@@ -75,7 +87,10 @@ export default function EditorPage() {
             passed,
           };
         } catch (error) {
-          console.error("Error while executing test", error);
+          errors++;
+          if (error instanceof Error) {
+            setErrorMessage(error.message);
+          }
           return {
             input: test.input,
             passed: false,
@@ -83,7 +98,11 @@ export default function EditorPage() {
         }
       });
 
+      if (errors == 0) setErrorMessage(null);
+
       console.log(testResults);
+      setResults(testResults);
+      setActiveTab("results");
     }
   }
 
@@ -93,9 +112,9 @@ export default function EditorPage() {
 
   return (
     <div className="lg:grid lg:min-h-[90dvh] lg:grid-cols-3 lg:gap-8 lg:py-6">
-      <div className="relative rounded bg-[#323234] p-3 lg:col-span-2">
+      <div className="relative rounded lg:col-span-2">
         <Editor
-          defaultValue={challenge.starter_code}
+          defaultValue={defaultEditorValue}
           height="100%"
           defaultLanguage="javascript"
           theme="vs-dark"
@@ -108,16 +127,35 @@ export default function EditorPage() {
             hover: { enabled: false },
             snippetSuggestions: "none",
             tabCompletion: "off",
+            scrollbar: {
+              vertical: "hidden",
+              horizontal: "hidden",
+            },
+            mouseWheelZoom: true,
+            fontSize: 18,
+            renderLineHighlight: "none",
+            guides: {
+              indentation: false,
+              highlightActiveIndentation: false,
+            },
+            overviewRulerLanes: 0,
           }}
         />
         <button
           onClick={handleRunCode}
-          className="absolute right-4 bottom-4 cursor-pointer"
+          className="absolute right-12 bottom-8 cursor-pointer rounded-md bg-[#F7DF1E] px-4 py-2 text-black"
         >
           Run Code
         </button>
       </div>
-      <div className="rounded bg-[#252526] p-6">{/* <ChallengeInfo /> */}</div>
+
+      <EditorInfoPanel
+        challenge={challenge}
+        results={results}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }

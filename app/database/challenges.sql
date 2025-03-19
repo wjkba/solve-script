@@ -12,8 +12,7 @@ CREATE TABLE challenges (
   starter_code TEXT NOT NULL,
   function_name TEXT NOT NULL,
   solution_code TEXT NOT NULL,
-  tests TEXT NOT NULL,
-  results TEXT NOT NULL
+  tests TEXT NOT NULL
 );
 INSERT INTO challenges (
     title,
@@ -27,15 +26,14 @@ INSERT INTO challenges (
     starter_code,
     function_name,
     solution_code,
-    tests,
-    results
+    tests
   )
 VALUES (
     'Sum Positives',
     'sum-positives',
     'Easy',
     'Sum all positive numbers in an array.',
-    'A string of comma-separated integers (e.g., "1,-4,7,12")',
+    'An array of integers (e.g., [1, -4, 7, 12])',
     'A single integer representing the sum of all positive numbers.',
     '[
         "sumPositive([1, -4, 7, 12]); // ➞ 20 (1 + 7 + 12)",
@@ -43,13 +41,22 @@ VALUES (
         "sumPositive([0, 5, 10, -10]); // ➞ 15 (5 + 10)"
     ]',
     '["Do not use built-in functions like filter() or reduce()."]',
-    'function sumPositive(arr) {\n  // Your code here\n}',
+    'function sumPositive(arr) {
+  // Your code here
+}',
     'sumPositive',
-    'function sumPositive(arr) {\n  return arr.filter(x => x > 0).reduce((a, b) => a + b, 0);\n}',
+    'function sumPositive(arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > 0) {
+      sum += arr[i];
+    }
+  }
+  return sum;
+}',
     '[
-        {"input": "sumPositive([1, -4, 7, 12]);", "expected": "20 (1 + 7 + 12)"},
-        {"input": "sumPositive([-1, -2, -3]);", "expected": "0 (No positive numbers)"},
-        {"input": "sumPositive([0, 5, 10, -10]);", "expected": "15 (5 + 10)"}
-    ]',
-    '{"output_type": "integer", "expected_behavior": "sum of positive numbers"}'
+        {"input": "[1, -4, 7, 12]", "expected": 20},
+        {"input": "[-1, -2, -3]", "expected": 0},
+        {"input": "[0, 5, 10, -10]", "expected": 15}
+    ]'
   );
