@@ -26,7 +26,7 @@ export default async function ChallengePage({
           <Link href={`/challenges/${slug}/editor`}>Continue in Editor</Link>
         </ButtonPrimary>
       </div>
-      <div className="rounded bg-[#323234] p-6">
+      <div className="rounded-md bg-[#323234] p-6">
         <ChallengeInfo challenge={challenge} />
       </div>
     </div>

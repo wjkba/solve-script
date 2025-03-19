@@ -5,8 +5,10 @@ export async function GET(
   request: Request,
   { params }: { params: { slug: string } },
 ) {
+  const { slug } = await params;
+
   try {
-    const challenge = getChallengeBySlug(params.slug);
+    const challenge = getChallengeBySlug(slug);
     if (!challenge) {
       return NextResponse.json(
         { error: "challenge not found" },

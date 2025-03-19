@@ -28,7 +28,8 @@ export default function EditorPage() {
         }
 
         const data = await response.json();
-        data.tests = JSON.parse(data.tests);
+        data.tests = await JSON.parse(data.tests);
+        console.log(data.tests);
         setChallenge(data);
         console.log(data);
       } catch (error) {
@@ -78,6 +79,7 @@ export default function EditorPage() {
           const userFunction = new Function(
             userCode + `return ${challenge.function_name}(${test.input})`,
           );
+          console.log("🚀 ~ testResults ~ userFunction:", userFunction);
           const output = userFunction();
           const passed = output === test.expected;
           return {
@@ -112,7 +114,7 @@ export default function EditorPage() {
 
   return (
     <div className="lg:grid lg:min-h-[90dvh] lg:grid-cols-3 lg:gap-8 lg:py-6">
-      <div className="relative rounded lg:col-span-2">
+      <div className="relative max-h-[95dvh] rounded-md border border-[#3C3C3C] py-8 lg:col-span-2">
         <Editor
           defaultValue={defaultEditorValue}
           height="100%"
@@ -143,7 +145,7 @@ export default function EditorPage() {
         />
         <button
           onClick={handleRunCode}
-          className="absolute right-12 bottom-8 cursor-pointer rounded-md bg-[#F7DF1E] px-4 py-2 text-black"
+          className="p absolute right-12 bottom-8 cursor-pointer rounded-md px-4 py-2 text-white outline outline-[hsl(0,0%,30%)]"
         >
           Run Code
         </button>

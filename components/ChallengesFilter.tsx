@@ -1,9 +1,28 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import InputBox from "./InputBox";
-const TOPICS = ["Algorithms", "Arrays", "Math", "Loops", "Recursion"];
+const TOPICS = [
+  "Algorithms",
+  "Arrays",
+  "Math",
+  "Loops",
+  "Recursion",
+  "Strings",
+];
 
-export default function ChallengesFilter() {
+interface ChallengesFilterProps {
+  selectedDifficulty: string[];
+  setSelectedDifficulty: (difficulty: string[]) => void;
+  selectedTopics: string[];
+  setSelectedTopics: (topics: string[]) => void;
+}
+
+export default function ChallengesFilter({
+  selectedDifficulty,
+  setSelectedDifficulty,
+  selectedTopics,
+  setSelectedTopics,
+}: ChallengesFilterProps) {
   const [isFilterShown, setIsFilterShown] = useState(false);
   const [isDekstop, setIsDekstop] = useState(false);
 
@@ -21,6 +40,28 @@ export default function ChallengesFilter() {
   }, []);
 
   const showFilters = isDekstop || isFilterShown;
+
+  function handleDifficultyChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+    const checked = event.target.checked;
+
+    if (checked) {
+      setSelectedDifficulty([...selectedDifficulty, value]);
+    } else {
+      setSelectedDifficulty(selectedDifficulty.filter((e) => e !== value));
+    }
+  }
+
+  function handleTopicChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+    const checked = event.target.checked;
+
+    if (checked) {
+      setSelectedTopics([...selectedTopics, value]);
+    } else {
+      setSelectedTopics(selectedTopics.filter((e) => e !== value));
+    }
+  }
 
   function Filters() {
     return (
@@ -57,23 +98,29 @@ export default function ChallengesFilter() {
           <InputBox
             type="checkbox"
             id="easy"
-            value="easy"
+            value="Easy"
             name="difficulty"
             label="Easy"
+            onChange={handleDifficultyChange}
+            checked={selectedDifficulty.includes("Easy")}
           />
           <InputBox
             type="checkbox"
             id="medium"
-            value="medium"
+            value="Medium"
             name="difficulty"
             label="Medium"
+            onChange={handleDifficultyChange}
+            checked={selectedDifficulty.includes("Medium")}
           />
           <InputBox
             type="checkbox"
             id="hard"
-            value="hard"
+            value="Hard"
             name="difficulty"
             label="Hard"
+            onChange={handleDifficultyChange}
+            checked={selectedDifficulty.includes("Hard")}
           />
         </form>
         <form>
@@ -82,10 +129,12 @@ export default function ChallengesFilter() {
             <InputBox
               key={topic}
               type="checkbox"
-              id={topic.toLowerCase()}
-              value={topic.toLowerCase()}
+              id={topic}
+              value={topic}
               name="topic"
               label={topic}
+              onChange={handleTopicChange}
+              checked={selectedTopics.includes(topic)}
             />
           ))}
         </form>

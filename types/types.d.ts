@@ -3,6 +3,7 @@ export type Challenge = {
   title: string;
   slug: string;
   difficulty: "Easy" | "Medium" | "Hard";
+  topics: string;
   description: string;
   input_format: string;
   output_format: string;

@@ -24,7 +24,7 @@ export default function EditorInfoPanel({
     return (
       <button
         onClick={() => setActiveTab(id)}
-        className={`cursor-pointer border-b-2 px-4 py-3 text-center ${
+        className={`flex-1 cursor-pointer border-b-2 px-4 py-2 text-center ${
           isActive ? "border-b-[#E1CB1B]" : "border-b-transparent"
         }`}
         type="button"
@@ -35,12 +35,12 @@ export default function EditorInfoPanel({
   }
   return (
     <div>
-      <div className="flex gap-2 border-b border-b-[#626266]">
+      <div className="mb-4 flex max-w-[50%] gap-2 border-b border-b-[#626266]">
         <TabButton id="info" label="Instructions" />
         <TabButton id="results" label="Results" />
       </div>
 
-      <div className="rounded bg-[#252526] p-6">
+      <div className="rounded-md border border-[#3C3C3C] bg-[#252526] p-6">
         {activeTab === "info" && <ChallengeInfo challenge={challenge} />}
         {activeTab === "results" && (
           <ResultsInfo results={results} errorMessage={errorMessage} />

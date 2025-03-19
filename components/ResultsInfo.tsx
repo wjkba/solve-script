@@ -1,4 +1,5 @@
 import { TestResult } from "@/types/types";
+import ButtonPrimary from "./ButtonPrimary";
 
 interface ChallengeInfoProps {
   results: TestResult[] | null;
@@ -9,7 +10,7 @@ function Result({ result }: { result: TestResult }) {
   const borderColor = result.passed ? "border-green-500" : "border-red-700";
   return (
     <div
-      className={`grid gap-2 rounded border text-sm ${borderColor} bg-[#1E1E1E] p-4`}
+      className={`grid gap-1 rounded border text-sm ${borderColor} bg-[#1E1E1E] p-4`}
     >
       <p>Input: {result.input}</p>
       <p>Output: {result.output}</p>
@@ -41,11 +42,12 @@ export default function ResultsInfo({
       {failed <= 0 && (
         <p className="mb-4 text-green-500">You passed all the tests</p>
       )}
-      <div className="flex flex-col gap-2">
+      <div className="mb-6 flex flex-col gap-2">
         {results.map((result, i) => (
           <Result result={result} key={i} />
         ))}
       </div>
+      {failed <= 0 && <ButtonPrimary>Submit solution</ButtonPrimary>}
     </div>
   );
 }
