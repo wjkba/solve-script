@@ -1,4 +1,4 @@
-import { getAllChallenges } from "@/app/database/db";
+import { getAllChallenges } from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET() {

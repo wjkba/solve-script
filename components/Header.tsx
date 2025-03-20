@@ -47,9 +47,9 @@ export default function Header() {
           {isOpen ? <BiX size={32} /> : <BiMenu size={32} />}
         </button>
 
-        <div className="hidden md:block">
+        <NavLink href="/profile" className="hidden md:block">
           <VscAccount size={24} />
-        </div>
+        </NavLink>
 
         {isOpen && (
           <nav className="absolute top-full left-0 z-50 w-full border-b border-[#3C3C3C] bg-[#252526] pb-8 md:hidden">

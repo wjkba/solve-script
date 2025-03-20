@@ -2,6 +2,8 @@ import ButtonPrimary from "@/components/ButtonPrimary";
 import ButtonSecondary from "@/components/ButtonSecondary";
 import Link from "next/link";
 
+// TODO: inna treść przy zalogowaniu
+
 export default function Home() {
   return (
     <div className="flex min-h-[65dvh] items-center">

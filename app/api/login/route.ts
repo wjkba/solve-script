@@ -1,13 +1,13 @@
-import { registerUser } from "@/actions/auth";
+import { loginUser } from "@/actions/auth";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function PUT(req: NextRequest) {
   try {
     const formData = await req.formData();
-    const result = await registerUser(formData);
+    const result = await loginUser(formData);
     return result;
   } catch (error) {
-    console.log(error);
+    console.log("🚀 ~ PUT ~ error:", error);
     return NextResponse.json({ error: "fetch failed" }, { status: 500 });
   }
 }

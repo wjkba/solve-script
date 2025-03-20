@@ -1,4 +1,4 @@
-import { getChallengeBySlug } from "@/app/database/db";
+import { getChallengeBySlug } from "@/lib/db";
 import BackButton from "@/components/ButtonBack";
 import ButtonPrimary from "@/components/ButtonPrimary";
 import ChallengeInfo from "@/components/ChallengeInfo";

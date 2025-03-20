@@ -1,8 +1,8 @@
 import { getSession } from "@/actions/auth";
-import RegisterForm from "@/components/RegisterForm";
+import LoginForm from "@/components/LoginForm";
 import { redirect } from "next/navigation";
 
-export default async function RegisterPage() {
+export default async function LoginPage() {
   const session = await getSession();
   if (session.isLoggedIn) redirect("/profile");
 
@@ -10,9 +10,9 @@ export default async function RegisterPage() {
     <div className="flex min-h-screen justify-center">
       <div className="w-full max-w-[450px]">
         <h1 className="mb-8 w-full text-center text-3xl">
-          Create your account
+          Log in to your account
         </h1>
-        <RegisterForm />
+        <LoginForm />
       </div>
     </div>
   );

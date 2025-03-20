@@ -15,6 +15,14 @@ CREATE TABLE challenges (
   solution_code TEXT NOT NULL,
   tests TEXT NOT NULL
 );
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  xp INTEGER DEFAULT 0,
+  completed_challenges TEXT DEFAULT '[]',
+  achievements TEXT DEFAULT '[]'
+);
 INSERT INTO challenges (
     title,
     slug,
