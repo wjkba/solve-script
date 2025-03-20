@@ -18,6 +18,8 @@ export default async function ChallengePage({
     notFound();
   }
 
+  // TODO: Not found
+
   return (
     <div>
       <div className="mb-4 flex justify-between">

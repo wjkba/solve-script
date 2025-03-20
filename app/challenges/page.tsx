@@ -29,6 +29,10 @@ export default function ChallengesPage() {
     return matchesDifficulty && matchesTopics;
   });
 
+  // TODO: Status filter
+  // TODO: Search
+  // TODO: Loading
+
   return (
     <div className="lg:flex lg:gap-16">
       <div className="lg:order-2">
