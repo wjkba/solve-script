@@ -21,3 +21,11 @@ export type TestResult = {
   expected?: any;
   passed: boolean;
 };
+
+export type Achievement = {
+  id: number;
+  title: string;
+  description: string;
+  icon_name: string;
+  xp_reward: number;
+};

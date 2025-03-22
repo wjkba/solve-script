@@ -1,4 +1,4 @@
-import { Challenge } from "@/types/types";
+import { Achievement, Challenge } from "@/types/types";
 import Database from "better-sqlite3";
 
 const db = new Database("data.db");
@@ -29,4 +29,33 @@ export function insertUser(username: string, hashedPassword: string) {
 export function getHashedPassword(userId: number) {
   if (!userId) return null;
   return db.prepare("SELECT password_hash FROM users WHERE id = ?").get(userId);
+}
+
+export function getUserAchievementIds(userId: number) {
+  if (!userId) return [];
+  const { achievements } = db
+    .prepare("SELECT achievements FROM users WHERE id = ?")
+    .get(userId) as { achievements: string };
+
+  return JSON.parse(achievements || "[]");
+}
+
+export function getAchievementsByIds(achievementIds: number[]) {
+  if (achievementIds.length <= 0) return null;
+  const placeholders = achievementIds.map(() => "?").join(",");
+  return db
+    .prepare(`SELECT * FROM achievements WHERE id IN (${placeholders})`)
+    .all(...achievementIds) as Achievement[];
+}
+
+export function getUserCompletedChallenges(userId: number) {
+  if (!userId) return [];
+  const { completed_challenges } = db
+    .prepare("SELECT completed_challenges FROM users WHERE id = ?")
+    .get(userId) as { completed_challenges: string };
+  const completedChallengesIds = JSON.parse(completed_challenges);
+  const placeholders = completedChallengesIds.map(() => "?").join(",");
+  return db
+    .prepare(`SELECT * FROM challenges WHERE id IN (${placeholders})`)
+    .all(...completedChallengesIds) as Challenge[];
 }

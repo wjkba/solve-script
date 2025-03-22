@@ -3,11 +3,14 @@ import Link from "next/link";
 import ButtonPrimary from "./ButtonPrimary";
 import Input from "./Input";
 import { FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 // TODO: Display errors
 // TODO: if response is 200 then redirect to /profile
 
 export default function LoginForm() {
+  const router = useRouter();
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -17,6 +20,7 @@ export default function LoginForm() {
       body: formData,
     });
 
+    if (response.ok) router.push("/profile");
     const data = await response.json();
     console.log(data);
   }

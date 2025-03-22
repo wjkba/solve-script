@@ -23,6 +23,13 @@ CREATE TABLE users (
   completed_challenges TEXT DEFAULT '[]',
   achievements TEXT DEFAULT '[]'
 );
+CREATE TABLE achievements (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  icon_name TEXT NOT NULL,
+  xp_reward INTEGER NOT NULL
+);
 INSERT INTO challenges (
     title,
     slug,
@@ -231,4 +238,35 @@ VALUES (
         {"input": "\"pwwkew\"", "expected": 3},
         {"input": "\"dvdf\"", "expected": 3}
     ]'
+  );
+--
+-- Sample Achievements
+INSERT INTO achievements (title, description, icon_name, xp_reward)
+VALUES (
+    'First Steps',
+    'Solve your first challenge',
+    'trophy',
+    100
+  ),
+  (
+    'Good Start',
+    'Solve 3 easy challenges',
+    'star',
+    250
+  );
+--
+-- Sample user
+INSERT INTO users (
+    username,
+    password_hash,
+    xp,
+    completed_challenges,
+    achievements
+  )
+VALUES (
+    'testuser',
+    '$2b$10$HITtTfLPbwpQkbL7E5m5hudF2/UrKz9uNmPTjdpdlPUeHPRgnSp3y',
+    500,
+    '[1, 2]',
+    '[1, 2]'
   );
