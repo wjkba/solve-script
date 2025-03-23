@@ -9,7 +9,7 @@ export default async function Home() {
   const { isLoggedIn } = session;
   return (
     <div>
-      <section className="relative z-20 pt-8" id="hero">
+      <section className="relative z-20 pt-12" id="hero">
         <div className="mb-4 flex max-w-[384px] flex-col gap-2 lg:mb-8 lg:max-w-[37.5rem] lg:gap-4">
           <p className="text-4xl text-white lg:text-6xl">
             Learn by Solving Coding Problems
@@ -41,7 +41,7 @@ export default async function Home() {
           )}
         </div>
       </section>
-      <div className="absolute top-[30%] right-0 z-0 max-h-[65vh] w-full opacity-70 lg:top-auto lg:bottom-0">
+      <div className="absolute top-[30%] right-0 z-0 max-h-[65vh] w-full opacity-80 lg:top-auto lg:bottom-0">
         <Image
           alt="background"
           src="/images/ss-background.png"
