@@ -4,10 +4,12 @@ import EditorInfoPanel from "@/components/EditorInfoPanel";
 import { Challenge, TestResult } from "@/types/types";
 import Editor from "@monaco-editor/react";
 import { notFound, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function EditorPage() {
   const params = useParams();
+  const router = useRouter();
   const slug = params.slug as string;
 
   const [isDesktop, setIsDesktop] = useState(false);
@@ -24,7 +26,7 @@ export default function EditorPage() {
       try {
         const response = await fetch(`/api/challenges/${slug}`);
         if (!response.ok) {
-          notFound();
+          router.push("/challenges/404");
         }
 
         const data = await response.json();
@@ -114,7 +116,7 @@ export default function EditorPage() {
 
   return (
     <div className="lg:grid lg:min-h-[90dvh] lg:grid-cols-3 lg:gap-8 lg:py-6">
-      <div className="relative max-h-[95dvh] rounded-md border border-[#3C3C3C] py-8 lg:col-span-2">
+      <div className="relative max-h-[85dvh] rounded-md border border-[#3C3C3C] py-8 lg:col-span-2">
         <Editor
           defaultValue={defaultEditorValue}
           height="100%"

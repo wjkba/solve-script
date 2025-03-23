@@ -43,7 +43,11 @@ export default function EditorInfoPanel({
       <div className="rounded-md border border-[#3C3C3C] bg-[#252526] p-6">
         {activeTab === "info" && <ChallengeInfo challenge={challenge} />}
         {activeTab === "results" && (
-          <ResultsInfo results={results} errorMessage={errorMessage} />
+          <ResultsInfo
+            challengeSlug={challenge.slug}
+            results={results}
+            errorMessage={errorMessage}
+          />
         )}
       </div>
     </div>

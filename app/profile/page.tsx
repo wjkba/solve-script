@@ -1,22 +1,19 @@
-// TODO: Profil
-
 import { getSession, logout } from "@/actions/auth";
-import AchievementCard from "@/components/AchievementCard";
 import AchievmentsList from "@/components/AchievmentsList";
 import ChallengeCard from "@/components/ChallengeCard";
 import {
   getAchievementsByIds,
   getUserAchievementIds,
   getUserCompletedChallenges,
+  getUserXP,
 } from "@/lib/db";
 import { redirect } from "next/navigation";
 
-//TODO: fix level
-
 export default async function ProfilePage() {
   const session = await getSession();
-  const { isLoggedIn, username, xp, userId } = session;
+  const { isLoggedIn, username, userId } = session;
   if (!isLoggedIn) redirect("/login");
+  const xp = userId ? getUserXP(userId) : 0;
   const achievementIds = userId ? getUserAchievementIds(userId) : [];
   const achievements = getAchievementsByIds(achievementIds) || [];
   const userCompletedChallenges = userId
@@ -52,7 +49,7 @@ export default async function ProfilePage() {
             />
             <div className="w-full">
               <div className="flex items-start justify-between">
-                <p className="mb-4 text-3xl">{username}</p>
+                <p className="mb-4 text-2xl">{username}</p>
                 <button
                   className="cursor-pointer text-neutral-300"
                   onClick={logout}
@@ -81,12 +78,12 @@ export default async function ProfilePage() {
         </section>
 
         <section id="achievements">
-          <h1 className="mb-4 text-xl">Achievements</h1>
+          <h1 className="mb-4 text-xl text-white">Achievements</h1>
           <AchievmentsList achievements={achievements} />
         </section>
 
         <section id="completed-exercises">
-          <h1 className="mb-4 text-xl">Solved challenges</h1>
+          <h1 className="mb-4 text-xl text-white">Solved challenges</h1>
           <div className="flex flex-col gap-2">
             {userCompletedChallenges.length <= 0 && (
               <p className="pl-4 text-neutral-400">

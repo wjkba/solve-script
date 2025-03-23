@@ -35,6 +35,20 @@ export async function registerUser(formData: FormData) {
       { status: 400 },
     );
 
+  if (username.length < 3) {
+    return NextResponse.json(
+      { error: "Username must be at least 3 characters" },
+      { status: 400 },
+    );
+  }
+
+  if (password.length < 5) {
+    return NextResponse.json(
+      { error: "Password must be at least 5 characters" },
+      { status: 400 },
+    );
+  }
+
   const existingUser = getUserId(username);
   if (existingUser)
     return NextResponse.json(
@@ -54,6 +68,20 @@ export async function loginUser(formData: FormData) {
 
   if (!username || !password) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+  }
+
+  if (username.length < 3) {
+    return NextResponse.json(
+      { error: "Username must be at least 3 characters" },
+      { status: 400 },
+    );
+  }
+
+  if (password.length < 5) {
+    return NextResponse.json(
+      { error: "Password must be at least 5 characters" },
+      { status: 400 },
+    );
   }
 
   const existingUser = getUserId(username) as { id: number };

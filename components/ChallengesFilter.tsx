@@ -66,7 +66,7 @@ export default function ChallengesFilter({
   function Filters() {
     return (
       <div className="flex flex-col gap-6">
-        <form>
+        {/* <form>
           <p className="font-medium">STATUS:</p>
           <InputBox
             type="radio"
@@ -92,7 +92,7 @@ export default function ChallengesFilter({
             name="status"
             label="Unsolved"
           />
-        </form>
+        </form> */}
         <form>
           <p className="font-medium">DIFFICULTY:</p>
           <InputBox

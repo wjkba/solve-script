@@ -2,46 +2,85 @@
 import Link from "next/link";
 import ButtonPrimary from "./ButtonPrimary";
 import Input from "./Input";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-// TODO: Display errors
-// TODO: if response is 200 then redirect to /profile
+const loginSchema = z.object({
+  username: z.string().min(3, "Username must be at least 3 characters"),
+  password: z.string().min(5, "Password must be at least 5 characters"),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
   const router = useRouter();
+  const [serverError, setServerError] = useState<string | null>(null);
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
 
-    const formData = new FormData(event.currentTarget);
+  async function onSubmit(data: LoginFormData) {
+    setServerError(null);
+
+    const formData = new FormData();
+    formData.append("username", data.username);
+    formData.append("password", data.password);
+
     const response = await fetch("/api/login", {
       method: "PUT",
       body: formData,
     });
 
+    const responseData = await response.json();
+
     if (response.ok) router.push("/profile");
-    const data = await response.json();
-    console.log(data);
+    else setServerError(responseData.error);
   }
   return (
-    <form onSubmit={onSubmit}>
-      <div className="mb-4 flex flex-col gap-2">
-        <Input
-          name="username"
-          id="username"
-          placeholder="Username"
-          type="text"
-          required
-        />
-        <Input
-          name="password"
-          id="password"
-          placeholder="Password"
-          type="password"
-          required
-        />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="mb-4 flex flex-col gap-4">
+        <div>
+          <Input
+            {...register("username")}
+            name="username"
+            id="username"
+            placeholder="Username"
+            type="text"
+          />
+          {errors.username && (
+            <p className="mt-1 text-sm text-red-500">
+              {errors.username.message}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <Input
+            {...register("password")}
+            name="password"
+            id="password"
+            placeholder="Password"
+            type="password"
+          />
+          {errors.password && (
+            <p className="mt-1 text-sm text-red-500">
+              {errors.password.message}
+            </p>
+          )}
+        </div>
       </div>
+
+      {serverError && (
+        <p className="mb-4 text-sm text-red-500">{serverError}</p>
+      )}
 
       <div className="flex flex-col items-center gap-3">
         <ButtonPrimary type="submit" className="w-full">

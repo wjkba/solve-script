@@ -26,6 +26,6 @@ export type Achievement = {
   id: number;
   title: string;
   description: string;
-  icon_name: string;
+  icon_name: "star" | "check";
   xp_reward: number;
 };

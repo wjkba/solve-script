@@ -59,3 +59,38 @@ export function getUserCompletedChallenges(userId: number) {
     .prepare(`SELECT * FROM challenges WHERE id IN (${placeholders})`)
     .all(...completedChallengesIds) as Challenge[];
 }
+
+export function getUserXP(userId: number) {
+  if (!userId) return 0;
+  const { xp } = db
+    .prepare("SELECT xp FROM users WHERE id = ?")
+    .get(userId) as { xp: number };
+  console.log(xp);
+  return xp;
+}
+
+export function addCompletedChallenge(challengeId: number, userId: number) {
+  if (!challengeId || !userId) return;
+  const { completed_challenges } = db
+    .prepare("SELECT completed_challenges FROM users WHERE id = ?")
+    .get(userId) as { completed_challenges: string };
+
+  const completedChallenges = JSON.parse(completed_challenges || "[]");
+  if (completedChallenges.includes(challengeId)) {
+    return null;
+  }
+
+  completedChallenges.push(challengeId);
+
+  return db
+    .prepare("UPDATE users SET completed_challenges = ? WHERE id = ?")
+    .run(JSON.stringify(completedChallenges), userId);
+}
+
+export function getChallengeIdBySlug(slug: string) {
+  if (!slug) return null;
+  const { id } = db
+    .prepare("SELECT id FROM challenges WHERE slug = ?")
+    .get(slug) as { id: number };
+  return id;
+}

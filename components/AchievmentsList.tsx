@@ -12,7 +12,11 @@ export default function AchievmentsList({
   const hiddenCount = 4 - achievementCount;
 
   const AchievementCards = achievements.map((achievement, i) => (
-    <AchievementCard key={i} text={achievement.title} />
+    <AchievementCard
+      icon={achievement.icon_name}
+      key={i}
+      text={achievement.title}
+    />
   ));
 
   for (let i = 0; i < hiddenCount; i++) {

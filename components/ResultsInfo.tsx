@@ -1,9 +1,13 @@
 import { TestResult } from "@/types/types";
 import ButtonPrimary from "./ButtonPrimary";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 interface ChallengeInfoProps {
   results: TestResult[] | null;
   errorMessage: null | string;
+  challengeSlug: string;
 }
 
 function Result({ result }: { result: TestResult }) {
@@ -22,7 +26,12 @@ function Result({ result }: { result: TestResult }) {
 export default function ResultsInfo({
   results,
   errorMessage,
+  challengeSlug,
 }: ChallengeInfoProps) {
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
   if (!results) {
     return <p>Run code to get the results</p>;
   }
@@ -30,6 +39,32 @@ export default function ResultsInfo({
   let failed = 0;
   for (let test of results) {
     if (!test.passed) failed++;
+  }
+
+  async function handleSubmit() {
+    console.log("DSOIJAODJAS");
+    if (failed > 0 || !challengeSlug) return;
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const response = await axios.put("/api/submit-challenge", {
+        slug: challengeSlug,
+      });
+      router.push(`/profile`);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage =
+          error.response?.data?.error || "Failed to submit solution";
+        setSubmitError(errorMessage);
+      } else {
+        setSubmitError("An error occurred while submitting your solution");
+      }
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -47,7 +82,21 @@ export default function ResultsInfo({
           <Result result={result} key={i} />
         ))}
       </div>
-      {failed <= 0 && <ButtonPrimary>Submit solution</ButtonPrimary>}
+      {failed <= 0 && (
+        <div>
+          <ButtonPrimary
+            className="mb-2"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Submit solution"}
+          </ButtonPrimary>
+
+          {submitError && (
+            <p className="mt-2 text-sm text-red-500">{submitError}</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -15,7 +15,7 @@ export default function LayoutWrapper({
   }
 
   return (
-    <div className="max-w-[1024px] lg:max-w-[1440px] lg:px-[9.75rem] lg:pt-12 pt-6 px-4 min-h-screen mx-auto">
+    <div className="mx-auto max-w-[1024px] px-4 pt-6 lg:max-w-[1440px] lg:px-[9.75rem] lg:pt-12">
       {children}
     </div>
   );

@@ -2,7 +2,6 @@ import { getChallengeBySlug } from "@/lib/db";
 import BackButton from "@/components/ButtonBack";
 import ButtonPrimary from "@/components/ButtonPrimary";
 import ChallengeInfo from "@/components/ChallengeInfo";
-import { Challenge } from "@/types/types";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -17,8 +16,6 @@ export default async function ChallengePage({
   if (!challenge) {
     notFound();
   }
-
-  // TODO: Not found
 
   return (
     <div>

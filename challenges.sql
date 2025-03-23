@@ -58,7 +58,7 @@ VALUES (
         "sumPositive([-1, -2, -3]); // ➞ 0 (No positive numbers)",
         "sumPositive([0, 5, 10, -10]); // ➞ 15 (5 + 10)"
     ]',
-    '["Do not use built-in functions like filter() or reduce()."]',
+    '["The function should handle both uppercase and lowercase letters."]',
     'function sumPositive(arr) {
   // Your code here
 }',
@@ -245,7 +245,7 @@ INSERT INTO achievements (title, description, icon_name, xp_reward)
 VALUES (
     'First Steps',
     'Solve your first challenge',
-    'trophy',
+    'check',
     100
   ),
   (
@@ -265,7 +265,7 @@ INSERT INTO users (
   )
 VALUES (
     'testuser',
-    '$2b$10$HITtTfLPbwpQkbL7E5m5hudF2/UrKz9uNmPTjdpdlPUeHPRgnSp3y',
+    '$2b$10$/8qsIPJIDSKOmnAefeVlsO5l4L7O23pYQcFRXape3kfR3JfRyJWHW',
     500,
     '[1, 2]',
     '[1, 2]'

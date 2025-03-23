@@ -12,7 +12,7 @@ export default function ButtonPrimary({
 }: ButtonPrimaryProps) {
   return (
     <button
-      className={`${className} cursor-pointer lg:py-3 bg-[#F7DF1E] text-black px-6 py-2 rounded`}
+      className={`${className} cursor-pointer rounded bg-[#F7DF1E] px-6 py-2 text-black`}
       type={type}
       {...props}
     >

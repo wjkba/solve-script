@@ -33,7 +33,7 @@ export default function AchievementCard({
   const iconElement = icons[icon] || icons["check"];
 
   return (
-    <div className="flex min-h-48 w-full flex-col items-center justify-center gap-3 rounded-md bg-zinc-800 p-4 text-neutral-200">
+    <div className="flex min-h-48 w-full flex-col items-center justify-center gap-3 rounded-md bg-[#323234] p-4 text-neutral-100 select-none">
       {iconElement}
       <p className="text-lg">{text}</p>
     </div>
