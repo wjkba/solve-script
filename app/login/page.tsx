@@ -12,6 +12,16 @@ export default async function LoginPage() {
         <h1 className="mb-8 w-full text-center text-3xl">
           Log in to your account
         </h1>
+        <div className="mb-6 rounded-md border border-[#F7DF1E] p-4">
+          <p className="mb-1 text-lg font-medium">Demo Account:</p>
+          <p>
+            Username: <span>testuser</span>
+          </p>
+          <p>
+            Password: <span>12345</span>
+          </p>
+        </div>
+
         <LoginForm />
       </div>
     </div>
