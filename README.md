@@ -1,5 +1,6 @@
 
 # Solve Script
+### Video Demo: https://youtu.be/dG1vZDgqy1M
 This is my CS50 final project - a JavaScript coding challenge app that allows users to tackle coding challenges of varying difficulty, get instant feedback on their solutions, track progress, and earn achievements
 
 
