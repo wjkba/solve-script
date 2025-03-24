@@ -5,6 +5,12 @@ This is my CS50 final project - a JavaScript coding challenge platform that allo
 
 ![Preview](assets/preview.png)
 
+## Introduction
+
+A coding challenge app idea popped into my head while I was solving challenges on Codewars and LeetCode. Later, I took the CS50x course, and had a really great time throughout all the lectures. Every time I submitted a new problem set I had to use the check50 command, which ran tests on my code, and I was really intrigued by how it worked. Towards the end of the course, I knew what my final project would be, and I'd even started drawing the UI a while back. My work is finished now, and I'm really proud of it.
+
+
+
 
 ## Core Features
 
@@ -14,7 +20,7 @@ This is my CS50 final project - a JavaScript coding challenge platform that allo
 -   **Session Management**: Keeps you logged in as you move around the site, no need to keep re-entering your details
 
 ### Challenge System
--   **Challenge Browser**: ind the right challenge for you, filter by how hard it is or what it's about
+-   **Challenge Browser**: Find the right challenge for you, filter by how hard it is or what it's about
 -   **Code Editor**:  a proper code editor, like the one from VS Code
 -   **Test Runner**: Hit "run" and see if your code passes all tests
 -   **Instant Feedback**: You'll know right away if your code worked or not, with results in the panel
@@ -25,12 +31,24 @@ This is my CS50 final project - a JavaScript coding challenge platform that allo
 -   **XP System**: Get points for every challenge you finish
 -   **Achievements**: Unlock special badges when you hit certain milestones
 
+## Tech Stack
+The front-end is built with React NextJS for server-side rendering and API routes. To keep the codebase clean and catch errors early, I chose TypeScript, adding static typing to JavaScript. Styling is handled with Tailwind CSS that lets me quickly create custom and responsive designs using classes
+
+### Authentication Approach
+ I chose Iron Session over JWT or NextAuth because of its simplicity and security. The cookies are encrypted, so a separate token system isn't needed. I really like this library because it doesn't add unnecessary complexity and making authentication with it was enjoyable. Zod is used to ensure the data I receive, especially user input, is valid and maintains its integrity. For securely storing passwords I used bcryptjs
+
+
+### Editor Implementation
+I was looking for a code editor library and stumbled upon Monaco Editor. I didn't realize the same editor VS Code uses was available, which was a pleasant surprise. Since I love VS Code, I had to go with Monaco
+
+### Database Choice
+For the database, I chose SQLite. I know it might not sound as fancy as MongoDB or PostgreSQL, but for this project, it's perfect. It's simple, portable, and fast
+
+
 
 ## App architecture
 
 ### Front-end
-
-
 
 #### App:
 * `page.tsx`: Main page, changes depending on if you're logged in
@@ -46,8 +64,8 @@ This is my CS50 final project - a JavaScript coding challenge platform that allo
 * `Editor.tsx`: The code editor, using Monaco
 * `EditorInfoPanel.tsx`: Shows instructions or results
 * `ResultsInfo.tsx`: Tells you if your code passed
-* UI Components: `ButtonPrimary.tsx`, `ButtonSecondary.tsx`, `Input.tsx` (basic buttons and boxes)
-* Form Components: `LoginForm.tsx`, `RegisterForm.tsx` (login and signup forms, with checks)
+* UI Components: `ButtonPrimary.tsx`, `ButtonSecondary.tsx`, `Input.tsx` 
+* Form Components: `LoginForm.tsx`, `RegisterForm.tsx` 
 
 ### Back-end
 
@@ -79,17 +97,6 @@ SQLite database with tables for:
 * Achievements (badges you earn)
 
 
-
-## Design Decisions
-
-### Authentication Approach
- chose Iron Session over JWT or NextAuth because of its simplicity and security. The cookies are encrypted, so a separate token system isn't needed. I really like this library because it doesn't add unnecessary complexity, and making authentication with it was enjoyable
-
-### Editor Implementation
-I was looking for a code editor library and stumbled upon Monaco Editor. I didn't realize the same editor VS Code uses was available, which was a pleasant surprise. Since I love VS Code, I had to go with Monaco
-
-### Database Choice
-For the database, I chose SQLite. I know it might not sound as fancy as MongoDB or PostgreSQL, but for this project, it's perfect. It's simple, portable, and fast
 
 ## Getting Started
 
