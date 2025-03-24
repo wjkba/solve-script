@@ -1,6 +1,6 @@
 
 # Solve Script
-This is my CS50 final project - a JavaScript coding challenge platform that allows users to tackle coding challenges of varying difficulty, get instant feedback on their solutions, track progress, and earn achievements
+This is my CS50 final project - a JavaScript coding challenge app that allows users to tackle coding challenges of varying difficulty, get instant feedback on their solutions, track progress, and earn achievements
 
 
 ![Preview](assets/preview.png)
